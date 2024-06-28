@@ -1,4 +1,6 @@
 // eslint-disable-next-line react/prop-types
+import PropTypes from 'prop-types';
+
 import Pizzalogo from "../assets/images/pizza1.png";
 import Footer from "../components/Footer";
 function Layout({ children }) {
@@ -36,4 +38,7 @@ function Layout({ children }) {
   );
 }
 
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 export default Layout;
