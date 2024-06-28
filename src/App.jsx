@@ -1,12 +1,15 @@
-import './App.css'
-import Home from './pages/Home'
+import "./App.css";
+import Layout from "./Layouts/Layout";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div>
-      <Home/>
+      <Layout>
+        <Home />
+      </Layout>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
