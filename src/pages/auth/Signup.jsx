@@ -1,6 +1,55 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import toast from "react-hot-toast";
 function Signup() {
+  const [signUpState, setSignUpState] = useState({
+    firstName: "",
+    email: "",
+    mobileNumber: "",
+    password: "",
+  });
+
+  function handleUserInput(e) {
+    const { name, value } = e.target; // name and value properties are extracted from e.target.
+    setSignUpState({ ...signUpState, [name]: value });
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault(); //prevent the form from refreshing the page
+    console.log(signUpState);
+    if (
+      !signUpState.email ||
+      !signUpState.mobileNumber ||
+      !signUpState.password ||
+      !signUpState.firstName
+    ) {
+      toast.error("Missing values from the form");
+      return;
+    }
+
+    if (signUpState.firstName.length < 5 || signUpState.firstName.length > 20) {
+      toast.error(
+        "First name should be atleast 5 characters long and maximum 20 characters long"
+      );
+      return;
+    }
+
+    // check email
+    if (!signUpState.email.includes("@") || !signUpState.email.includes(".")) {
+      toast.error("Invalid email address");
+      return;
+    }
+
+    // check mobile number length to be between 10-12
+    if (
+      signUpState.mobileNumber.length < 10 ||
+      signUpState.mobileNumber.length > 12
+    ) {
+      toast.error("Mobile number should be between 10-12 characters");
+      return;
+    }
+  }
+
   return (
     <>
       <section className="text-gray-600 body-font">
@@ -163,6 +212,7 @@ function Signup() {
                 id="firstName"
                 name="firstName"
                 required
+                onChange={handleUserInput}
                 minLength={5}
                 placeholder="John"
                 className="w-full px-3 py-1 mt-2 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out border border-gray-300 rounded outline-noe focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200"
@@ -181,6 +231,7 @@ function Signup() {
                 id="email"
                 name="email"
                 required
+                onChange={handleUserInput}
                 placeholder="John@example.com"
                 className="w-full px-3 py-1 mt-2 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out border border-gray-300 rounded outline-noe focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200"
               />
@@ -198,6 +249,7 @@ function Signup() {
                 id="mobileNumber"
                 name="mobileNumber"
                 required
+                onChange={handleUserInput}
                 maxLength={12}
                 placeholder="Enter 10 digit mobile number"
                 className="w-full px-3 py-1 mt-2 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out border border-gray-300 rounded outline-noe focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200"
@@ -216,12 +268,16 @@ function Signup() {
                 id="password"
                 name="password"
                 required
+                onChange={handleUserInput}
                 placeholder="Enter your password"
                 className="w-full px-3 py-1 mt-2 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out border border-gray-300 rounded outline-noe focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200"
               />
             </div>
 
-            <button className="w-full px-8 py-2 text-lg text-white bg-yellow-500 border-0 rounded focus:outline-none hover:bg-yellow-600">
+            <button
+              onClick={handleFormSubmit}
+              className="w-full px-8 py-2 text-lg text-white bg-yellow-500 border-0 rounded focus:outline-none hover:bg-yellow-600"
+            >
               Create Account
             </button>
 
