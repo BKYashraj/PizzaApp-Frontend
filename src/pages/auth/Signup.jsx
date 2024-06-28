@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Signup() {
   return (
     <>
@@ -169,7 +171,7 @@ function Signup() {
 
             <div className="relative mb-4">
               <label
-                htmlFor="firstName"
+                htmlFor="email"
                 className="text-sm leading-7 text-gray-600"
               >
                 Email <span className="text-red-500">*</span>
@@ -186,7 +188,7 @@ function Signup() {
 
             <div className="relative mb-4">
               <label
-                htmlFor="firstName"
+                htmlFor="mobileNumber"
                 className="text-sm leading-7 text-gray-600"
               >
                 Mobile Number <span className="text-red-500">*</span>
@@ -204,7 +206,7 @@ function Signup() {
 
             <div className="relative mb-4">
               <label
-                htmlFor="firstName"
+                htmlFor="password"
                 className="text-sm leading-7 text-gray-600"
               >
                 Password <span className="text-red-500">*</span>
@@ -225,9 +227,9 @@ function Signup() {
 
             <p className="mt-3 text-xs text-gray-500">
               Already have an account?{" "}
-              <a href="/login" className="text-yellow-500">
+              <Link to="/auth/login" className="text-yellow-500">
                 Login
-              </a>
+              </Link>
             </p>
           </form>
         </div>
