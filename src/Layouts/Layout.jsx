@@ -9,10 +9,12 @@ import { logout } from "../Redux/Slices/AuthSlice";
 function Layout({ children }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+
   async function handleLogout(e) {
     e.preventDefault();
     dispatch(logout());
   }
+  
   const navigate = useNavigate();
   return (
     <div>

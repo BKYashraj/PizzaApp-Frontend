@@ -6,4 +6,6 @@ axiosInstance.defaults.baseURL = import.meta.env.VITE_BACKEND_URL; //set the bas
 
 axios.defaults.withCredentials = true; // Allow cookies to be sent with requests
 
+// Intercept each request to include the token
+
 export default axiosInstance;

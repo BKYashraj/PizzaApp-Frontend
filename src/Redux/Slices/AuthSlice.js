@@ -29,6 +29,7 @@ export const createAccount = createAsyncThunk(
 );
 
 export const login = createAsyncThunk("auth/login", async (data) => {
+  console.log("incoming data to the thunk", data);
   try {
     const response = axiosInstance.post("/auth/login", data);
 
