@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../Redux/Slices/AuthSlice";
+import CartIcon from "../assets/images/cart.svg";
 function Layout({ children }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -14,12 +15,15 @@ function Layout({ children }) {
     e.preventDefault();
     dispatch(logout());
   }
+
+  const { cartsData } = useSelector((state) => state.cart);
   
   const navigate = useNavigate();
   return (
     <div>
       <nav className="flex items-center justify-around h-16 text-[#6B7280] font-mono border-none shadow-md">
-        <div className="flex items-center justify-center"
+        <div
+          className="flex items-center justify-center"
           onClick={() => navigate("/")}
         >
           <p>Pizza App</p>
@@ -53,6 +57,17 @@ function Layout({ children }) {
                 <Link to={"/auth/login"}>Login</Link>
               )}
             </li>
+
+            {isLoggedIn && (
+              <Link to={"/cart"}>
+                <li>
+                  <img src={CartIcon} className="w-8 h-8 inline" />{" "}
+                  <p className="text-black inline">
+                    {cartsData?.items?.length}
+                  </p>
+                </li>
+              </Link>
+            )}
           </ul>
         </div>
       </nav>
