@@ -8,6 +8,7 @@ import ProductDetails from "./pages/Products/ProductDetails";
 import CartDetails from "./pages/Cart/CartDetails";
 import Order from "./pages/Order/Order";
 import OrderSuccess from "./pages/Order/OrderSuccess";
+import RequireAuth from "./components/Auth/RequireAuth";
 function App() {
   return (
     <div>
@@ -17,10 +18,13 @@ function App() {
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/auth/login" element={<Login />} />
 
-          <Route path='/order' element={<Order />} />
-          <Route path='/order/success' element={<OrderSuccess />} />
+          <Route element={<RequireAuth />}>
+            <Route path='/order' element={<Order />} />
+            <Route path='/order/success' element={<OrderSuccess />} />
+            <Route path='/cart' element={<CartDetails />} />
+          </Route>
+ 
           <Route path='/product/:productId' element={<ProductDetails />} />
-          <Route path='/cart' element={<CartDetails />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </>

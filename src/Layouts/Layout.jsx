@@ -18,10 +18,19 @@ function Layout({ children }) {
     dispatch(logout());
   }
 
+  async function fetchCartDetails() {
+    const res = await dispatch(getCartDetails());
+    if(res?.payload?.isUnauthorized) {
+        dispatch(logout());
+    }
+  }
+
   const { cartsData } = useSelector((state) => state.cart);
   
   useEffect(() => {
-    dispatch(getCartDetails());
+    if(isLoggedIn) {
+      fetchCartDetails();
+    }
   },[]);
 
   const navigate = useNavigate();
