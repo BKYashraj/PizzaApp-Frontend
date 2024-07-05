@@ -119,8 +119,9 @@ import axiosInstance from "../../Helpers/axiosInstance";
 import toast from "react-hot-toast";
 
 const initialState = {
-  isLoggedIn: localStorage.getItem("isLoggedIn") === 'true' || false,
+  isLoggedIn: localStorage.getItem("isLoggedIn") === "true" || false,
   role: localStorage.getItem("role") || "",
+  token: localStorage.getItem("token") || "",
   data: (() => {
     const data = localStorage.getItem("data");
     try {
@@ -131,58 +132,70 @@ const initialState = {
   })(),
 };
 
-export const login = createAsyncThunk("auth/login", async (data) => {
+export const login = createAsyncThunk("auth/login", async (credentials) => {
   try {
-    const response = await axiosInstance.post("/auth/login", data);
+    const response = await axiosInstance.post("/auth/login", credentials);
 
     toast.promise(response, {
       loading: "Logging in...",
       success: "Logged in successfully",
-      error: "Ohh No!, something went wrong. Please try again",
+      error: "Failed to log in. Please try again",
     });
 
-    const apiResponse = await response;
-    
-    // Assuming your backend returns a token in response.data.accessToken
-    const accessToken = apiResponse.data.accessToken;
+    const apiResponse = response.data;
 
-    // Store token in local storage
-    localStorage.setItem("accessToken", accessToken);
+    // Store the token and user data in localStorage
+    const { token, userRole, userData } = apiResponse.data;
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", userRole);
+    localStorage.setItem("data", JSON.stringify(userData));
 
     return apiResponse;
   } catch (error) {
     console.log(error);
-    throw error; // Ensure errors are propagated to handle in UI components
+    throw error;
+  }
+});
+
+export const logout = createAsyncThunk("auth/logout", async () => {
+  try {
+    const response = await axiosInstance.post("/auth/logout");
+
+    toast.promise(response, {
+      loading: "Logging out...",
+      success: "Logged out successfully",
+      error: "Failed to log out. Please try again",
+    });
+
+    // Clear localStorage on logout
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("data");
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 });
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    // Add any additional reducers related to authentication if needed
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.isLoggedIn = true;
-        state.role = action?.payload?.data?.userRole;
-        state.data = action?.payload?.data?.userData;
-
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("role", action?.payload?.data?.userRole);
-        localStorage.setItem(
-          "data",
-          JSON.stringify(action?.payload?.data?.userData)
-        );
+        state.role = action.payload.data.userRole;
+        state.data = action.payload.data.userData;
+        state.token = action.payload.data.token;
       })
-      .addCase(login.rejected, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.isLoggedIn = false;
         state.role = "";
         state.data = {};
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("role");
-        localStorage.removeItem("data");
+        state.token = "";
       });
   },
 });
