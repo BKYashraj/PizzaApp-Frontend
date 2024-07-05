@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../Redux/Slices/AuthSlice";
 import CartIcon from "../assets/images/cart.svg";
+import { useEffect } from "react";
+import { getCartDetails } from "../Redux/Slices/CartSlice";
 function Layout({ children }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -18,6 +20,10 @@ function Layout({ children }) {
 
   const { cartsData } = useSelector((state) => state.cart);
   
+  useEffect(() => {
+    dispatch(getCartDetails());
+  },[]);
+
   const navigate = useNavigate();
   return (
     <div>
