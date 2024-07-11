@@ -9,6 +9,7 @@ import CartDetails from "./pages/Cart/CartDetails";
 import Order from "./pages/Order/Order";
 import OrderSuccess from "./pages/Order/OrderSuccess";
 import RequireAuth from "./components/Auth/RequireAuth";
+import OrderNowPage from "./pages/Order/OrderNowPage";
 function App() {
   return (
     <div>
@@ -22,6 +23,7 @@ function App() {
             <Route path='/order' element={<Order />} />
             <Route path='/order/success' element={<OrderSuccess />} />
             <Route path='/cart' element={<CartDetails />} />
+            <Route path='/order/now' element={<OrderNowPage />} />
           </Route>
  
           <Route path='/product/:productId' element={<ProductDetails />} />

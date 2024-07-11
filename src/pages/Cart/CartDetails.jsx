@@ -12,7 +12,7 @@
 //   const [cartItems, setCartItems] = useState();
 //   const { cartsData } = useSelector((state) => state.cart);
 //   const dispatch = useDispatch();
-  
+
 //   async function fetchCartProducts() {
 //     console.log("fetching cart details");
 //     const response = await dispatch(getCartDetails());
@@ -196,7 +196,10 @@
 // export default CartDetails;
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartDetails, removeProductFromCart } from "../../Redux/Slices/CartSlice";
+import {
+  getCartDetails,
+  removeProductFromCart,
+} from "../../Redux/Slices/CartSlice";
 import Layout from "../../Layouts/Layout";
 import { Link } from "react-router-dom";
 
@@ -204,7 +207,7 @@ function CartDetails() {
   const [cartDetails, setCartDetails] = useState();
   const { cartsData } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  
+
   const getTotalQuantity = () => {
     return cartsData?.items?.reduce((total, item) => total + item.quantity, 0);
   };
@@ -234,10 +237,10 @@ function CartDetails() {
 
   return (
     <Layout>
-      <section className="py-8 antialiased md:py-16 ">
+      <section className="py-8 antialiased md:py-8 ">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-          <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
-            Cart details
+          <h2 className="text-xl font-bold text-gray-900 sm:text-2xl text-center">
+            Cart Details
           </h2>
           {cartDetails?.items?.length > 0 ? (
             <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8 ">
@@ -250,17 +253,33 @@ function CartDetails() {
                     >
                       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                         <img
-                          className="hidden w-20 h-20 dark:block rounded-md"
+                          className="hidden w-52 h-40 dark:block rounded-md"
                           src={item?.product?.productImage}
                           alt={item?.product?.productName}
                         />
-                        <div className="flex-1 w-full min-w-0 md:order-2 md:max-w-md">
+                        <div className="flex-1 w-full min-w-0 md:order-2 md:max-w-md items-center">
                           <p className="text-base font-medium text-gray-900 hover:underline">
                             <Link to={`/product/${item?._id}`}>
                               {`${item?.product?.productName}, ${item?.product?.description}, Category: ${item?.product?.category}`}
                             </Link>
                           </p>
-                          <p> ₹{item?.product?.price} x {item?.quantity} </p>
+
+                          <div className="mb-2">
+                            <span className="text-lg font-medium text-gray-900 line-through">
+                              ₹{item?.product?.originalPrice}
+                            </span>
+                            <span className="ml-2 text-lg font-medium text-red-500">
+                              {item?.product?.discount}% OFF
+                            </span>
+                            <span className="ml-4 text-2xl font-bold text-green-600">
+                              ₹{item?.product?.discountedPrice}
+                            </span>
+                          </div>
+
+                          <p  className="ml-1 text-xl font-bold mb-2">
+                            {" "}
+                            ₹{item?.product?.discountedPrice} x {item?.quantity}{" "}
+                          </p>
 
                           <div className="flex items-center gap-4">
                             {item._id && (
@@ -305,7 +324,7 @@ function CartDetails() {
 
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <dl className="flex items-center justify-between gap-4">
+                      <dl className="flex flex-col gap-4">
                         {cartDetails?.items.map((item) => {
                           return (
                             <dd
@@ -314,7 +333,8 @@ function CartDetails() {
                             >
                               {item?.product?.productName} x {item?.quantity}
                               <p>
-                                {item?.product?.price} x {item?.quantity}
+                                {item?.product?.discountedPrice} x{" "}
+                                {item?.quantity}
                               </p>
                             </dd>
                           );
@@ -330,7 +350,8 @@ function CartDetails() {
                           ? ""
                           : cartDetails?.items.reduce(
                               (acc, item) =>
-                                acc + item?.quantity * item?.product?.price,
+                                acc +
+                                item?.quantity * item?.product?.discountedPrice,
                               0
                             )}
                       </dd>
@@ -385,4 +406,3 @@ function CartDetails() {
 }
 
 export default CartDetails;
-

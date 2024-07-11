@@ -53,7 +53,7 @@ async function handleFormSubmit(e) {
                         <span className="font-extrabold text-red-900">
                          {cartsData?.items?.length === 0
                       ? ''
-                      : cartsData?.items?.reduce((acc, item) => acc + item?.quantity*item?.product?.price , 0) }
+                      : cartsData?.items?.reduce((acc, item) => acc + item?.quantity*item?.product?.discountedPrice , 0) }
                         </span>
                     </p> 
                 </div>

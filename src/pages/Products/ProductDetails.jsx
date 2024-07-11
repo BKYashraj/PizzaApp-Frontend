@@ -157,12 +157,22 @@ function ProductDetails() {
               <p className="leading-relaxed">{productDetails?.description}</p>
 
               <div className="flex pt-5">
-                <span className="text-2xl font-medium text-gray-900 title-font">
-                  ₹{productDetails?.price}
-                </span>
+    
+                <div className="mb-2">
+                      <span className="text-lg font-medium text-gray-900 line-through">
+                        ₹{productDetails?.originalPrice}
+                      </span>
+                      <span className="ml-2 text-lg font-medium text-red-500 md:mr-4 mr-2">
+                        {productDetails?.discount}% OFF
+                      </span>
+                    </div>
+                    
+                    <p className="text-2xl font-bold text-green-600">
+                      ₹{productDetails?.discountedPrice}
+                    </p>
                 {isInCart ? (
                   <button
-                    className="flex px-6 py-2 ml-auto text-white bg-yellow-500 border-0 rounded focus:outline-none hover:bg-yellow-600"
+                    className="flex md:px-6 px-1 py-2 ml-auto text-white bg-yellow-500 border-0 rounded focus:outline-none hover:bg-yellow-600"
                     onClick={() => handleRemove(productId)}
                   >
                     Remove from cart
