@@ -10,6 +10,7 @@ import Order from "./pages/Order/Order";
 import OrderSuccess from "./pages/Order/OrderSuccess";
 import RequireAuth from "./components/Auth/RequireAuth";
 import OrderNowPage from "./pages/Order/OrderNowPage";
+import Addproducts from "./pages/Admin/Addproducts";
 function App() {
   return (
     <div>
@@ -24,6 +25,7 @@ function App() {
             <Route path='/order/success' element={<OrderSuccess />} />
             <Route path='/cart' element={<CartDetails />} />
             <Route path='/order/now' element={<OrderNowPage />} />
+            <Route path='/admin/addProduct' element={<Addproducts/>} />
           </Route>
  
           <Route path='/product/:productId' element={<ProductDetails />} />

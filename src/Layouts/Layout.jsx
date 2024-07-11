@@ -27,6 +27,8 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
 
   const { cartsData } = useSelector((state) => state.cart);
 
+  const { role } = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (isLoggedIn) {
       fetchCartDetails();
@@ -47,17 +49,26 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
         </div>
         <div className="hidden md:block">
           <ul className="flex gap-4">
-            <li className="hover:text-[#FF9110] cursor-pointer" onClick={scrollToMenu}>
+            <li
+              className="hover:text-[#FF9110] cursor-pointer"
+              onClick={scrollToMenu}
+            >
               {" "}
               <p>Menu </p>
             </li>
 
-            <li className="hover:text-[#FF9110] cursor-pointer" onClick={scrollToServices}>
+            <li
+              className="hover:text-[#FF9110] cursor-pointer"
+              onClick={scrollToServices}
+            >
               {" "}
               <p>Services </p>
             </li>
 
-            <li className="hover:text-[#FF9110] cursor-pointer" onClick={scrollToAbout}>
+            <li
+              className="hover:text-[#FF9110] cursor-pointer"
+              onClick={scrollToAbout}
+            >
               {" "}
               <p>About </p>
             </li>
@@ -66,6 +77,12 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
 
         <div>
           <ul className="flex gap-4">
+            <li className="hover:text-[#FF9110]">
+              {isLoggedIn && role === "ADMIN" ? (
+                <Link to="/admin/addProduct">Add Pizza</Link>
+              ) : null}
+            </li>
+
             <li className="hover:text-[#FF9110]">
               {isLoggedIn ? (
                 <Link onClick={handleLogout}>Logout</Link>

@@ -6,6 +6,22 @@ const initialState = {
   productsData: [], // Array of products
 };
 
+export const createProducts = createAsyncThunk('/add/products',async (data)=>{
+  try {
+    const products = axiosInstance.post('/products', data);
+    toast.promise(products,{
+      loading:'Pizza adding...',
+      error: 'Ohh No!, something went wrong. Cannot add Pizza',
+      success: 'Pizza added successfully'
+    })
+    const apiResponse = await products;
+    return apiResponse;
+  } catch (error) {
+    console.log(error);
+    toast.error('Something went wrong')
+  }
+})
+
 export const getAllProducts = createAsyncThunk('/products/getAll',async ()=>{
   try {
     const products = axiosInstance.get('/products');
@@ -46,7 +62,8 @@ const productSlice = createSlice({
     builder
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.productsData = action?.payload?.data?.data;
-      });
+      }).addCase(createProducts.fulfilled, (state, action) => {
+        state.productsData = action?.payload?.data?.data;})
   },
 });
 
