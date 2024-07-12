@@ -239,7 +239,6 @@ function Addproducts() {
                 </label>
                 <input
                   type="file"
-                  required
                   name="productImage"
                   id="productImage"
                   accept=".jpg, .jpeg, .png"
