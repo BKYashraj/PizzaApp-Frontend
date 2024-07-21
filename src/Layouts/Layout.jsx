@@ -44,8 +44,8 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
           className="flex items-center justify-center cursor-pointer"
           onClick={() => navigate("/")}
         >
-          <p>Pizza Corner</p>
-          <img src={Pizzalogo} alt="Pizza logo" />
+          <p className="pl-2">Pizza Corner</p>
+          <img src={Pizzalogo} className="h-13 w-12" alt="Pizza logo" />
         </div>
         <div className="hidden md:block">
           <ul className="flex gap-4">
@@ -76,7 +76,7 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
         </div>
 
         <div>
-          <ul className="flex gap-4">
+          <ul className="flex gap-2 pl-1 text-center text-wrap">
             <li className="hover:text-[#FF9110]">
               {isLoggedIn && role === "ADMIN" ? (
                 <Link to="/admin/addProduct">Add Pizza</Link>
@@ -96,7 +96,7 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
 
             {isLoggedIn && (
               <Link to={"/cart"}>
-                <li>
+                <li className="pr-1">
                   <img src={CartIcon} className="w-8 h-8 inline" />{" "}
                   <p className="text-black inline">
                     {cartsData?.items?.length}
