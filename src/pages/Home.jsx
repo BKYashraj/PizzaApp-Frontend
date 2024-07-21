@@ -111,9 +111,9 @@ function Home() {
                   premium ingredients and artisanal flair. 😋
                 </p>
               </div>
-              <Loader show={loading}/>
+              
             </section>
-
+            <Loader show={loading}/>
             <div className="flex flex-wrap justify-center">
               {productsData.slice(0, visibleProducts).map(
                 (item) =>
