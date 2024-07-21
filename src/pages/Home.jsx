@@ -1,3 +1,4 @@
+import privateAxios from '../utils/privateAxios';
 import IconArrowRight from "../components/icons/arrowRight";
 import IconPatchCheck from "../components/icons/IconPatchCheck";
 import PizzaImage from "../assets/images/pizza2.png";
@@ -10,14 +11,31 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { getAllProducts } from "../Redux/Slices/ProductSlice";
+import Loader from "./Loader.jsx"
 function Home() {
+
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, []);
-
   const { productsData } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        await dispatch(getAllProducts());
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  
 
   const menuSectionRef = useRef(null);
   const servicesSectionRef = useRef(null);
@@ -41,6 +59,10 @@ function Home() {
         scrollToServices={() => scrollToSection(servicesSectionRef)}
         scrollToAbout={() => scrollToSection(aboutSectionRef)}
       >
+
+        <Loader show={loading}/>
+
+
         {/*Hero Section*/}
         <section className="flex flex-col-reverse items-center justify-center py-5 md:flex-row md:gap-7 bg-gradient-to-r from from-amber-50 to-orange-300">
           <div className="w-4/6 ml-4 text-center md:w-2/6 md:text-left">
@@ -73,7 +95,6 @@ function Home() {
         </section>
 
         {/*Menu Section*/}
-
         <div ref={menuSectionRef} className="mx-auto">
           <div className="mx-auto">
             <section className="flex flex-col-reverse items-center justify-center py-5 md:flex-row md:gap-7">
@@ -90,6 +111,7 @@ function Home() {
                   premium ingredients and artisanal flair. 😋
                 </p>
               </div>
+              <Loader show={loading}/>
             </section>
 
             <div className="flex flex-wrap justify-center">
