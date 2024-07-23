@@ -1,4 +1,3 @@
-import privateAxios from '../utils/privateAxios';
 import IconArrowRight from "../components/icons/arrowRight";
 import IconPatchCheck from "../components/icons/IconPatchCheck";
 import PizzaImage from "../assets/images/pizza2.png";

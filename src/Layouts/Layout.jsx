@@ -45,7 +45,7 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
           onClick={() => navigate("/")}
         >
           <p className="pl-2">Pizza Corner</p>
-          <img src={Pizzalogo} className="h-13 w-12" alt="Pizza logo" />
+          <img src={Pizzalogo} className="h-13 w-12 md:h-16 md:w-16" alt="Pizza logo" />
         </div>
         <div className="hidden md:block">
           <ul className="flex gap-4">
