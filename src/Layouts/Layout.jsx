@@ -79,7 +79,7 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
           <ul className="flex gap-2 pl-1 text-center text-wrap">
             <li className="hover:text-[#FF9110]">
               {isLoggedIn && role === "ADMIN" ? (
-                <Link to="/admin/addProduct">Add Pizza</Link>
+                <Link to="/admin">Admin Panel</Link>
               ) : null}
             </li>
 

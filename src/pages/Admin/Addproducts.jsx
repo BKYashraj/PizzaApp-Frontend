@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import Layout from "../../Layouts/Layout";
+// import Layout from "../../Layouts/Layout";
 import Food from "../../assets/images/food.svg";
 import { createProducts } from "../../Redux/Slices/ProductSlice";
+import { Link } from "react-router-dom";
+import AdminPanel from "./AdminPanel";
 // import { useNavigate } from "react-router-dom";
 
 function Addproducts() {
@@ -78,15 +80,17 @@ function Addproducts() {
   }
 
   return (
-    <Layout>
-      <Toaster />
+       <div className="min-h-screen flex">
+      {/* Sidebar */}
+      <AdminPanel>
+        <Toaster />
       <section className="py-1">
         <div className="flex flex-col md:flex-row items-center justify-center px-5 md:ml-32">
           <div className="md:w-2/6">
             <img src={Food} alt="Food" />
           </div>
           <div className="max-w-md md:w-4/6 mx-auto mt-8 bg-white p-3">
-            <h2 className="mb-4 text-2xl font-semibold">Add product</h2>
+            <h2 className="mb-4 text-4xl font-semibold">Add product</h2>
 
             <form onSubmit={handleFormSubmit}>
               {/* product name */}
@@ -257,7 +261,8 @@ function Addproducts() {
           </div>
         </div>
       </section>
-    </Layout>
+      </AdminPanel>
+    </div> 
   );
 }
 

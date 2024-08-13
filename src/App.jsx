@@ -11,6 +11,8 @@ import OrderSuccess from "./pages/Order/OrderSuccess";
 import RequireAuth from "./components/Auth/RequireAuth";
 import OrderNowPage from "./pages/Order/OrderNowPage";
 import Addproducts from "./pages/Admin/Addproducts";
+import AdminPanel from "./pages/Admin/AdminPanel";
+import ViewOrders from "./pages/Admin/ViewOrder";
 function App() {
   return (
     <div>
@@ -26,6 +28,8 @@ function App() {
             <Route path='/cart' element={<CartDetails />} />
             <Route path='/order/now' element={<OrderNowPage />} />
             <Route path='/admin/addProduct' element={<Addproducts/>} />
+            <Route path='/admin' element={<AdminPanel/>} />
+            <Route path='/admin/viewOrders' element={<ViewOrders/>} />
           </Route>
  
           <Route path='/product/:productId' element={<ProductDetails />} />
