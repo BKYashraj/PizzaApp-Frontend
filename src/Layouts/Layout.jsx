@@ -42,6 +42,7 @@ function Layout({ children, scrollToServices, scrollToMenu, scrollToAbout }) {
       <nav className="flex items-center justify-around h-16 text-[#6B7280] font-mono border-none shadow-md">
         <div
           className="flex items-center justify-center cursor-pointer"
+          
           onClick={() => navigate("/")}
         >
           <p className="pl-2">Pizza Corner</p>

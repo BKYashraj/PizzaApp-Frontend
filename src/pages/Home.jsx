@@ -23,16 +23,20 @@ function Home() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        await dispatch(getAllProducts());
+        const response = await dispatch(getAllProducts());
+        if (!response || response.error) {
+          throw new Error('Failed to fetch products');
+        }
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, [dispatch]);
+  
 
   
 
