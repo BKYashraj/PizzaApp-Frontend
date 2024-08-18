@@ -35,9 +35,13 @@ function Home() {
     };
   
     fetchData();
-  }, [dispatch]);
   
-
+    // Set up an interval to periodically check the backend
+    const intervalId = setInterval(fetchData, 5 * 60 * 1000); // every 5 minutes
+  
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
   
 
   const menuSectionRef = useRef(null);
