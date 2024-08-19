@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { getproductDetails } from "../../Redux/Slices/ProductSlice";
 import Layout from "../../Layouts/Layout";
 import {
@@ -8,22 +8,48 @@ import {
   getCartDetails,
   removeProductFromCart,
 } from "../../Redux/Slices/CartSlice";
+import toast from "react-hot-toast";
 
 function ProductDetails() {
+  
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
   const { productId } = useParams();
   const dispatch = useDispatch();
   const [productDetails, setProductDetails] = useState({});
   const [isInCart, setIsInCart] = useState(false); // Check if product is in cart
   //
 
-  async function handleCart() {
-    // Add product to cart
-    const response = await dispatch(addProductToCart(productId));
-    if (response?.payload?.data?.success) {
-      setIsInCart(true);
-      dispatch(getCartDetails()); // Fetch cart details and update state
+  const handleCart = async () => {
+    if (isLoggedIn) {
+      try {
+        const response = await dispatch(addProductToCart(productId));
+
+        if (response?.payload?.data?.success) {
+          setIsInCart(true);
+          dispatch(getCartDetails());
+          toast.success("Item added to cart!");
+        } else {
+          toast.error("Failed to add item to cart.");
+        }
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+        toast.error("An error occurred while adding the item to the cart.");
+      }
+    } else {
+      toast.error("Please login before adding items to the cart.");
+      navigate('/auth/login');
     }
-  }
+  };
+
+  // async function handleCart() {
+  //   // Add product to cart
+  //   const response = await dispatch(addProductToCart(productId));
+  //   if (response?.payload?.data?.success) {
+  //     setIsInCart(true);
+  //     dispatch(getCartDetails()); // Fetch cart details and update state
+  //   }
+  // }
 
   async function handleRemove() {
     // Remove product from cart
